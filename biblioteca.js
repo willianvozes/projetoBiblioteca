@@ -1,4 +1,4 @@
-//Sistema Biblioteca JS- WIll, Gugaro, Vtormacs, FuraBUxo, Yuto e JP
+//Sistema Biblioteca JS- Will
 
 //trabalhar com DOM, classes, herança e objetos
 // Criação da classe base EntidadeBibliografica
@@ -10,16 +10,29 @@ class EntidadeBibliografica {
     this.codigo = codigo;
     this.emprestado = false;
     this.usuarioEmprestimo = null;
-  }
 
+  }
+  estaEmprestado() {
+    return this.emprestado;
+  }
   emprestar(usuario) {
-    this.emprestado = true;
-    this.usuarioEmprestimo = usuario;
+    if (this.estaEmprestado()) {
+      console.log('Este item já está emprestado.');
+      return;
+    } else {
+      this.emprestado = true;
+      this.usuarioEmprestimo = usuario;
+    }
   }
 
   devolver() {
-    this.emprestado = false;
-    this.usuarioEmprestimo = null;
+    if (!this.estaEmprestado()) {
+      console.log('Este item não está emprestado.');
+      return;
+    } else {
+      this.emprestado = false;
+      this.usuarioEmprestimo = null;
+    }
   }
 }
 
@@ -30,6 +43,7 @@ class Livro extends EntidadeBibliografica {
     this.genero = genero;
   }
 }
+
 
 // Criação da classe Revista que herda de EntidadeBibliografica
 class Revista extends EntidadeBibliografica {
@@ -46,3 +60,15 @@ class Usuario {
     this.dataNascimento = dataNascimento;
   }
 }
+
+class Biblioteca {
+  constructor() {
+    this.acervo = [];
+    this.usuarios = [];
+  }
+  adicionarItem(item) {
+    this.acervo.push(item);
+  }
+}
+var biblioteca = new Biblioteca();
+var livro = new Livro();
