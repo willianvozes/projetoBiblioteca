@@ -1,29 +1,13 @@
-# projetoBiblioteca
- projeto mensal de fazer uma biblioteca em javascript
+O projeto "projetoBiblioteca" é um exercício de programação orientada a objetos em JavaScript, com o objetivo de criar um sistema de biblioteca. O projeto é dividido em duas partes:
 
-Conteúdo do exercício
+**Parte 1:**
+- Criação de uma classe base chamada `EntidadeBibliografica` com atributos como título, autor, ano de publicação, código, emprestado e usuário de empréstimo.
+- Criação de duas subclasses de `EntidadeBibliografica`: `Livro` e `Revista`. A classe `Livro` tem um atributo adicional chamado gênero.
+- Implementação dos métodos `emprestar` e `devolver` na classe `EntidadeBibliografica`.
+- Criação de uma classe `Usuario` com atributos como nome, registro acadêmico e data de nascimento.
 
-Sistema de Biblioteca em JavaScript
+**Parte 2:**
+- Criação de uma classe `Biblioteca` com atributos como acervo (um array para armazenar as entidades bibliográficas) e usuários (um array para armazenar os usuários).
+- Implementação de métodos na classe `Biblioteca` como `adicionarItem`, `listarAcervo`, `adicionarUsuario`, `emprestarItem` e `devolverItem`.
 
-Este exercício tem como objetivo praticar a programação orientada a objetos, trabalhando com classes, herança, e interação entre objetos.
-
-Parte 1
-
-Crie uma classe base chamada EntidadeBibliografica com os seguintes atributos:
-
-titulo
-autor
-anoPublicacao
-codigo
-emprestado: booleano
-usuarioEmprestimo: Referência ao usuário que pegou emprestado (pode ser null se não estiver emprestado)
-
-Crie duas subclasses de EntidadeBibliografica: Livro e Revista. A classe Livro deve ter um atributo adicional chamado genero.
-
-Implemente os métodos emprestar e devolver na classe EntidadeBibliografica. O método emprestar deve atribuir o usuário que está pegando emprestado e definir emprestado como true. O método devolver deve resetar o status de empréstimo e desatribuir o usuário.
-
-Crie uma classe Usuario com os seguintes atributos:
-
-nome
-registroAcademico
-dataNascimento (no formato "YYYY-MM-DD") ex. (1995-12-25)
+Este projeto proporciona uma excelente oportunidade para praticar conceitos de programação orientada a objetos, como classes, herança e interação entre objetos.

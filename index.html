@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bíblioteca</title>
-    <!DOCTYPE html>
-    <script src="library.js"></script>
+    <title>Biblioteca</title>
     <style>
         body,
         h1,
@@ -27,10 +25,67 @@
 
     <button onclick="adicionarLivro()">Adicionar Livro</button>
     <button onclick="adicionarRevista()">Adicionar Revista</button>
-    <button onclick="adicionarUsuario()">Adicionar Usuário</button>
     <button onclick="listarAcervo()">Listar Acervo</button>
     <button onclick="emprestarItem()">Emprestar Item</button>
     <button onclick="devolverItem()">Devolver Item</button>
+    <button onclick="adicionarUsuario()">Adicionar Usuário</button>
+
+    <script src="biblioteca.js"></script>
+
+    <script>
+        async function inicializarAcervoBiblioteca() {
+            const acervoAPI = await obterDadosDaAPI();
+            await biblioteca.popularAcervo(acervoAPI);
+        }
+
+        async function obterDadosDaAPI() {
+            try {
+                const resposta = await fetch('https://api-biblioteca-mb6w.onrender.com/acervo');
+                const acervoAPI = await resposta.json();
+                return acervoAPI;
+            } catch (erro) {
+                console.error('Erro ao obter dados do acervo da API:', erro.message);
+                return null;
+            }
+        }
+
+        async function UserAPI() {
+            try {
+                const resposta = await fetch('https://api-biblioteca-mbow.onrender.com/usuario');
+                const dados = await resposta.json();
+                return dados;
+            } catch (erro) {
+                console.error('Erro ao obter dados do acervo da API:', erro.message);
+                return null;
+            }
+        }
+
+        const usuarioteste = new Usuario('Usuário teste', '123456', '2000-12-01');
+        const usuarioteste2 = new Usuario('Usuário teste2', '654321', '1999-01-30');
+        const biblioteca = new Biblioteca();
+
+        function adicionarLivro() {
+            const codigo = prompt('Código do Livro');
+            const titulo = prompt('Título do Livro');
+            const autor = prompt('Autor do Livro');
+            const anoPublicacao = prompt('Ano de Publicação do Livro');
+            const genero = prompt('Gênero do Livro');
+            const livro = new Livro(codigo, titulo, autor, anoPublicacao, genero);
+            biblioteca.adicionarItem(livro);
+        }
+
+        function adicionarRevista() {
+            const codigo = prompt('Código da Revista');
+            const titulo = prompt('Título da Revista');
+            const autor = prompt('Autor da Revista');
+            const anoPublicacao = prompt('Ano de Publicação da Revista');
+            const edicao = prompt('Edição da Revista');
+            const revista = new Revista(codigo, titulo, autor, anoPublicacao, edicao);
+            biblioteca.adicionarItem(revista);
+        }
+
+        inicializarAcervoBiblioteca();
+    </script>
 </body>
 
 </html>
