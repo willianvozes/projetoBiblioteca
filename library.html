@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <script src="lib.js"></script>
+    <style>
+        body,
+        h1,
+        button {
+            display: grid;
+            font-family: Arial, Helvetica, sans-serif;
+            justify-self: center;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Biblioteca</h1>
+
+    <h2>Operações</h2>
+    <button onclick="biblioteca.listarAcervo()">Listar Acervo</button>
+    <button onclick="biblioteca.listarUsuarios()">Listar Usuários</button>
+    <button onclick="adicionarLivro()">Adicionar Livro</button>
+    <button onclick="adicionarRevista()">Adicionar Revista</button>
+    <button onclick="adicionarUsuario()">Adicionar Usuário</button>
+    <button onclick="emprestarItem()">Emprestar item</button>
+    <button onclick="devolverItem()">Devolver item</button>
+
+    <script>
+        const biblioteca = new Biblioteca();
+        // Adicionar itens ao acervo
+        const item1 = new Livro("LivroTeste1", "Autor1", 2020, 1, false, null, "Romance");
+        const item2 = new Revista("RevistaTeste1", "Autor1", 2020, 2, false, null, "dezembro");
+        biblioteca.adicionarItem(item1);
+        biblioteca.adicionarItem(item2);
+        const usuario1 = new Usuario("NomeTeste1", "RA0001", "20010101");
+        const usuario2 = new Usuario("NomeTeste2", "RA0002", "20020202");
+        biblioteca.adicionarUsuarios(usuario1);
+        biblioteca.adicionarUsuarios(usuario2);
+
+        async function obterDadosDaAPI() {
+            try {
+                const respostaAcervo = await fetch('https://api-biblioteca-mb6w.onrender.com/acervo');
+
+                const acervoAPI = await respostaAcervo.json();
+                return acervoAPI;
+                console.log(`Acervo API puxado com sucesso!`);
+            } catch (erro) {
+                console.error('Erro ao obter dados do acervo da API:', erro.message);
+                return null;
+            }
+        }
+        async function inicializarBiblioteca() {
+            try {
+                const acervoAPI = await obterDadosDaAPI();
+                if (acervoAPI !== null) {
+                    biblioteca.popularAcervo(acervoAPI);
+                    //console.log('Acervo carregado com sucesso!');
+                }
+            } catch (erro) {
+                console.error('Erro ao inicializar API da biblioteca:', erro.message);
+            }
+        }
+        inicializarBiblioteca();
+
+        //funções dos botoes
+        function adicionarUsuario() {
+            const nome = prompt('Nome:');
+            let registroAcademico = parseInt(prompt('Registro Academico:'));
+            while (isNaN(registroAcademico)) {
+                registroAcademico = parseInt(prompt('Registro Academico inválido. Digite novamente:'));
+            }
+            const dia = prompt('Dia (dd):');
+            const mes = prompt('Mês (mm):');
+            const ano = prompt('Ano (aaaa):');
+            const dataNascimento = `${ano}-${mes}-${dia}`;
+
+            const usuario = new Usuario(nome, registroAcademico, dataNascimento);
+            biblioteca.adicionarUsuarios(usuario);
+        }
+
+        function adicionarLivro() {
+            const titulo = prompt('Título:');
+            const autor = prompt('Autor:');
+            const anoPublicacao = prompt('Ano de Publicação:');
+            const codigo = prompt('Código:').toUpperCase();
+            const genero = prompt('Gênero:');
+
+            const livro = new Livro(titulo, autor, anoPublicacao, codigo, false, null, genero);
+            biblioteca.adicionarItem(livro);
+        }
+
+        function adicionarRevista() {
+            const titulo = prompt('Título:');
+            const autor = prompt('Autor:');
+            const anoPublicacao = prompt('Ano de Publicação:');
+            const codigo = prompt('Código:').toUpperCase();
+            const edicao = prompt('Edição:');
+
+            const revista = new Revista(titulo, autor, anoPublicacao, codigo, false, null, edicao);
+            biblioteca.adicionarItem(revista);
+        }
+
+        function emprestarItem() {
+            const codigo = prompt('Código do item:').toUpperCase();
+            const registroAcademico = prompt('Registro Acadêmico:');
+
+            biblioteca.emprestarItem(codigo, registroAcademico);
+        }
+
+        function devolverItem() {
+            const codigo = prompt('Código do item:').toUpperCase();
+
+            biblioteca.devolverItem(codigo);
+        }
+    </script>
+</body>
+
+</html>
