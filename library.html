@@ -46,29 +46,49 @@
         biblioteca.adicionarUsuarios(usuario1);
         biblioteca.adicionarUsuarios(usuario2);
 
-        async function obterDadosDaAPI() {
+        async function obterDadosDaAPI(url) {
             try {
-                const respostaAcervo = await fetch('https://api-biblioteca-mb6w.onrender.com/acervo');
+                const resposta = await fetch(url);
+                const dadosAPI = await resposta.json();
 
-                const acervoAPI = await respostaAcervo.json();
-                return acervoAPI;
-                console.log(`Acervo API puxado com sucesso!`);
+                console.log(`Dados da API recebidos com sucesso!`);
+                return dadosAPI;
             } catch (erro) {
-                console.error('Erro ao obter dados do acervo da API:', erro.message);
+                console.error('Erro ao obter dados da API:', erro.message);
                 return null;
             }
         }
+
         async function inicializarBiblioteca() {
             try {
-                const acervoAPI = await obterDadosDaAPI();
-                if (acervoAPI !== null) {
-                    biblioteca.popularAcervo(acervoAPI);
-                    //console.log('Acervo carregado com sucesso!');
+                console.log('Iniciando API da biblioteca...');
+
+                const urlAcervo = 'https://api-biblioteca-mb6w.onrender.com/acervo';
+                const urlUsers = 'https://api-biblioteca-mb6w.onrender.com/users';
+
+                const acervoAPI = await obterDadosDaAPI(urlAcervo);
+                const usersAPI = await obterDadosDaAPI(urlUsers);
+
+                if (acervoAPI !== null && usersAPI !== null) {
+                    console.log('Dados da API implantados com sucesso!');
+
+                    acervoAPI.forEach(item => {
+                        if ('genero' in item ) {
+                            biblioteca.adicionarItem(new Livro(item.titulo, item.autor, item.anoPublicacao, item.codigo, item.genero));
+                        } else if ('edicao' in item) {
+                            biblioteca.adicionarItem(new Revista(item.titulo, item.autor, item.anoPublicacao, item.codigo, item.edicao));
+                        }
+                    });
+                    usersAPI.forEach(user => {
+                        biblioteca.adicionarUsuarios(user);
+                    });
+                    console.log('Acervo e Usuários inicializados com sucesso!');
                 }
             } catch (erro) {
                 console.error('Erro ao inicializar API da biblioteca:', erro.message);
             }
         }
+
         inicializarBiblioteca();
 
         //funções dos botoes

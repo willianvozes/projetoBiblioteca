@@ -77,8 +77,13 @@ class Biblioteca {
         console.log(`Item "${item.titulo}" adicionado ao acervo.`);
     }
 
-    popularAcervo(acervoAPI) {
-        acervoAPI.forEach(item => {
+    adicionarUsuarios(usuario) {
+        this.usuarios.push(usuario);
+        console.log(`Usuário ${usuario.nome} adicionado à biblioteca.`);
+    }
+
+    popularAcervo(items) {
+        items.forEach(item => {
             if (item instanceof Livro) {
                 this.adicionarItem(new Livro(item.titulo, item.autor, item.anoPublicacao, item.codigo, item.emprestado, item.usuarioEmprestimo, item.genero));
             } else if (item instanceof Revista) {
@@ -103,16 +108,13 @@ class Biblioteca {
     listarUsuarios() {
         let usersString = 'Usuários da biblioteca:\n';
         this.usuarios.forEach(usuario => {
-            usersString += `Nome: ${usuario.nome};RA: ${usuario.registroAcademico}; Nascimento: ${usuario.dataNascimento}\n`;
+            usersString += `Nome: ${usuario.nome}; RA: ${usuario.registroAcademico}; Nascimento: ${usuario.dataNascimento}\n`;
         });
         console.log(usersString);
         alert(usersString);
     }
 
-    adicionarUsuarios(usuario) {
-        this.usuarios.push(usuario);
-        console.log(`Usuário ${usuario.nome} adicionado à biblioteca.`);
-    }
+
 
     emprestarItem(codigo, registroAcademico) {
         const item = this.acervo.find(i => i.codigo === codigo);
