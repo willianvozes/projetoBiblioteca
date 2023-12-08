@@ -16,7 +16,13 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            scale: 1.1;
+        }
+        body {
+            background-color: blue;
+            color: aliceblue;
         }
     </style>
 </head>
@@ -38,7 +44,7 @@
         const biblioteca = new Biblioteca();
         // Adicionar itens ao acervo
         const item1 = new Livro("LivroTeste1", "Autor1", 2020, 1, false, null, "Romance");
-        const item2 = new Revista("RevistaTeste1", "Autor1", 2020, 2, false, null, "dezembro");
+        const item2 = new Revista("RevistaTeste1", "Autor1", 202, 2, false, null, "dezembro");
         biblioteca.adicionarItem(item1);
         biblioteca.adicionarItem(item2);
         const usuario1 = new Usuario("NomeTeste1", "RA0001", "20010101");

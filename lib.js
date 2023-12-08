@@ -93,12 +93,12 @@ class Biblioteca {
     }
 
     listarAcervo() {
-        let acervoString = 'Acervo da biblioteca:\n';
+        let acervoString = '\nAcervo da biblioteca:\n\n';
         this.acervo.forEach(item => {
             if (item instanceof Livro) {
-                acervoString += `Livro: "${item.titulo}"; Autor: ${item.autor}; Ano de Publicação: ${item.anoPublicacao}, Código: ${item.codigo}; Gênero: ${item.genero}\n`;
+                acervoString += `LIVRO:"${item.titulo}"|AUTOR:${item.autor}|ANO:${item.anoPublicacao}|CODIGO:${item.codigo}|GÊNERO:${item.genero}\n`;
             } else if (item instanceof Revista) {
-                acervoString += `Revista: "${item.titulo}"; Autor: ${item.autor}; Ano de Publicação: ${item.anoPublicacao}, Código: ${item.codigo}; Edição: ${item.edicao}\n`;
+                acervoString += `REVISTA:"${item.titulo}"|AUTOR:${item.autor}|ANO:${item.anoPublicacao}|CODIGO:${item.codigo}|EDIÇÃO:${item.edicao}\n`;
             }
         });
         console.log(acervoString);
@@ -106,9 +106,9 @@ class Biblioteca {
     }
 
     listarUsuarios() {
-        let usersString = 'Usuários da biblioteca:\n';
+        let usersString = '\nUsuários da biblioteca:\n\n';
         this.usuarios.forEach(usuario => {
-            usersString += `Nome: ${usuario.nome}; RA: ${usuario.registroAcademico}; Nascimento: ${usuario.dataNascimento}\n`;
+            usersString += `NOME: ${usuario.nome} |RA: ${usuario.registroAcademico}|NASCIMENTO: ${usuario.dataNascimento}\n`;
         });
         console.log(usersString);
         alert(usersString);
